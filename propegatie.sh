@@ -95,11 +95,20 @@ else
     else
         echo --------------------------------------------------------------------------------------
         echo "$record records "
-        dig "$record" +short "$domein"
+        records1=$(dig "$record" +short "$domein")
+        echo "$records1"
         echo --------------------------------------------------------------------------------------
         echo "$record records @$nameservers "
-        dig "$record" "$domein" @"$nameservers" +short 
+        records2=$(dig "$record" "$domein" @"$nameservers" +short)
+        echo "$records2"
         echo --------------------------------------------------------------------------------------
-    fi
+
+            if [ "$records1" = "$records2" ]; then
+                echo ${green}${bold}"Geen propagatie"${normal}
+            else
+                echo ${red}${bold}"Wel propagatie"${normal}
+            fi
+        fi
 fi
+echo --------------------------------------------------------------------------------------
 
